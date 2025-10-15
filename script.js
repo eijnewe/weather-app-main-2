@@ -111,7 +111,7 @@ function createWeatherDivs(data, units) {
 
         const valueP = document.createElement('p')
         valueP.className = 'weather-value'
-        valueP.textContent = `${value}${unit}`
+        valueP.textContent = `${Math.round(value)}${unit}`
 
         itemDiv.append(labelP, valueP)
 
@@ -141,7 +141,8 @@ function createWeatherDivs(data, units) {
 
 function displayDegrees(data) {
     const temp = document.createElement('p')
-    temp.textContent = `${data}°`
+    Math.round(data)
+    temp.textContent = `${Math.round(data)}°`
     temp.classList.add('temperature')
     return temp
 }
@@ -153,10 +154,8 @@ function renderCurrent(current, units) {
     // console.log(current)
     getWeatherIconAndDescription(current.weather_code)
     container.append(getWeatherIconAndDescription(current.weather_code))
-    const temp = document.createElement('p')
-    temp.textContent = `${current.temperature_2m}°`
-    temp.classList.add('temperature')
-    container.append(temp)
+
+    container.append(displayDegrees(current.temperature_2m))
     createWeatherDivs(current, units)
     // console.log(units)
 }
@@ -392,6 +391,6 @@ document.addEventListener('click', (e) => {
     console.log('Document clicked', e.target)
     if (!searchArea.contains(e.target)) {
         searchResults.innerHTML = ''
-        searchResults.classList.toggle('show')
+        searchResults.classList.remove('show')
     }
 })
