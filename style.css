@@ -29,7 +29,6 @@
     --weight-light: 300;
     --weight-medium: 500;
     --weight-semibold: 600;
-    --weight-semibold-italic: 600i;
     --weight-bold: 700;
 }
 
@@ -59,6 +58,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    font-weight: var(--weight-medium);
 }
 
 /* ================================
@@ -69,6 +69,10 @@ h1 {
     font-family: var(--font-heading);
     font-size: 3.25rem;
     text-align: center;
+}
+
+h2 {
+    font-size: 1.8rem;
 }
 
 h1,
@@ -88,8 +92,7 @@ h3 {
 
 p {
     /* color: var(--neutral-800); */
-    font-weight: var(--weight-light);
-
+    font-weight: var(--weight-medium);
     margin: 0;
 }
 
@@ -203,11 +206,12 @@ nav button {
 
 .search-results {
     list-style-type: none;
-   width: 100%;
+    width: 100%;
 }
 .search-result-item {
     padding: 0.5rem;
     border-radius: 0.5em;
+    cursor: pointer;
     &:hover {
         background-color: var(--neutral-700);
     }
@@ -219,7 +223,8 @@ nav button {
     display: inline-block;
 }
 
-.unit-menu, .search-results  {
+.unit-menu,
+.search-results {
     position: absolute;
     top: 100%;
     right: 0;
@@ -245,6 +250,7 @@ nav button {
     border-radius: 0.5em;
     text-wrap-mode: nowrap;
     color: var(--neutral-0);
+    cursor: pointer;
     &:hover {
         background-color: var(--neutral-700);
     }
@@ -284,14 +290,23 @@ form button {
 #place {
     border: none;
     background-color: transparent;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    padding-left: 3rem;
+    cursor: pointer;
 }
 
 .search-bar {
     border-radius: 0.5em;
-    padding: 1rem;
-    display: flex;
-    gap: 1rem;
+    position: relative;
     background-color: var(--neutral-800);
+    cursor: pointer;
+}
+.search-bar > img {
+    position: absolute;
+    left: 1em;
+    top: 1em;
 }
 
 .today,
@@ -377,11 +392,17 @@ main {
     .row {
         align-self: stretch;
         justify-content: space-between;
+        font-size: 1rem;
     }
 }
 
+.temperature.low {
+    font-weight: var(--weight-light);
+}
+
 .weather-value {
-    font-size: 1.5em;
+    font-weight: var(--weight-light);
+    font-size: 2rem;
     color: var(--neutral-0);
 }
 
@@ -389,6 +410,7 @@ main {
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr 1fr 1fr;
+    flex-grow: 1;
 }
 
 .hourly {
@@ -396,8 +418,11 @@ main {
     background-color: var(--neutral-800);
     border-radius: 0.5em;
     max-height: 600px;
+    overflow: hidden;
     .row {
         justify-content: space-between;
+        align-items: center;
+        gap: 0.5em;
     }
 }
 
@@ -428,6 +453,54 @@ main {
     overflow-y: scroll;
 }
 
+#weekdays {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: inherit;
+    line-height: inherit;
+    border-radius: 0.5em;
+    font-weight: var(--weight-medium);
+    padding: 0.5rem 1rem;
+    padding-right: 2.5rem;
+    width: 100%;
+    height: 100%;
+}
+
+.select.wrapper {
+    position: relative;
+    background-color: var(--neutral-600);
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.select.wrapper::after {
+    right: 1rem;
+    top: 0.25rem;
+    position: absolute;
+    content: url(/assets/images/icon-dropdown.svg);
+}
+
+@media (min-width: 576px) {
+   body {
+        padding: 1.5rem 3rem;
+    }
+     #search-area {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+     form {
+        flex-direction: row;
+    }
+    #widget {
+          max-width: 400px;
+          margin: 0 auto;
+    }
+}
+
 /* --- Tablet (iPad: 768px–1024px) --- */
 @media (min-width: 768px) and (max-width: 1024px) {
     /*  .container {
@@ -438,10 +511,47 @@ main {
   .menu {
     display: flex;
   } */
+
+
+
+    main {
+        /*  grid-template-columns: 1fr 2fr; */
+        /* grid-template-rows: repeat(3, 1fr); */
+    }
+    /*  }
+        .today {
+        grid-row: 1 ;
+        grid-column: 1 ;
+    } */
+
+    .daily {
+        grid-row: 2;
+        grid-column: 1 / span 2;
+    }
+
+      .hourly {
+        grid-column: 2;
+        grid-row: 1;
+        max-height: 515px;
+    }
+
+    #widget {
+
+        /*  flex-direction: row; */
+        /* background: no-repeat url(/assets/images/bg-today-large.svg); */
+    }
+
+    /* #weather-details {
+        grid-template-columns: repeat(4, 1fr);
+    } */
+
+    .daily-forecast {
+        grid-template-columns: repeat(7, 1fr);
+    }
 }
 
 /* --- Laptop / desktop (1025px–1440px) --- */
-@media (min-width: 1025px) and (max-width: 1440px) {
+@media (min-width: 1025px) {
     body {
         padding: 2rem 5rem;
     }
@@ -485,10 +595,6 @@ main {
         grid-template-columns: repeat(7, 1fr);
     }
 
-    .hourly .row {
-        position: sticky;
-        top: 0;
-    }
     /*  .container {
     padding: 2rem 4rem;
   }
