@@ -181,6 +181,7 @@ header {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    margin-bottom: 2rem;
     /* max-width: 1200px; */
 }
 
@@ -240,6 +241,10 @@ nav button {
     display: inline-block;
 }
 
+#search-area {
+    align-self: center;
+}
+
 .unit-menu,
 .search-results {
     position: absolute;
@@ -296,7 +301,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     font-size: 1.25rem;
 }
 
@@ -305,7 +310,6 @@ form button {
     background-color: var(--blue-500);
     padding: 0.75em 1.25em;
     font-size: inherit;
-
 }
 
 #place {
@@ -323,7 +327,7 @@ form button {
     position: relative;
     background-color: var(--neutral-800);
     cursor: pointer;
-    
+    flex-grow: 1;
 }
 .search-bar > img {
     position: absolute;
@@ -519,13 +523,14 @@ main {
     form {
         flex-direction: row;
         gap: 1rem;
-    /* max-width: 55%; */
-
     }
     /* #widget {
           max-width: 400px;
           margin: 0 auto;
     } */
+    .search-bar {
+        max-width: 505px;
+    }
 }
 
 /* --- Tablet (iPad: 768px–1024px) --- */
