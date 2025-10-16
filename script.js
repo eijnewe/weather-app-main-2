@@ -166,7 +166,6 @@ function displayDegrees(data) {
 }
 
 function renderCurrent(current, units) {
-
     const container = document.getElementById('degrees')
     container.innerHTML = ''
     currentDate.textContent = formatLocalizedDate(current.time)
@@ -307,7 +306,7 @@ const units = {
 }
 
 // add a global to remember current location (used for refetching when units change)
-let currentCoords = { lat: 59.33, lon: 18.06 }
+let currentCoords = { lat: 52.52437, lon: 13.41053 }
 
 const unitInputs = document.querySelectorAll('.unit-option input[type="radio"]')
 
@@ -363,7 +362,6 @@ document.querySelector('form').addEventListener('submit', async function (e) {
     try {
         const res = await fetch(url)
         const data = await res.json()
-
 
         searchResults.innerHTML = ''
         if (data.results && data.results.length > 0) {

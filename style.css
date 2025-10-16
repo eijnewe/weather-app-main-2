@@ -55,11 +55,27 @@ body {
     background-color: var(--neutral-900);
     margin: 0;
     padding: 1rem;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     gap: 2rem;
+    justify-content: center; */
     font-weight: var(--weight-medium);
 }
+
+header,
+main {
+    max-width: 1200px; /* keeps them the same width */
+    width: 100%;
+    margin: 0 auto; /* centers horizontally */
+}
+
+/* .wrapper {
+   display: flex;
+     flex-direction: column;
+    gap: 2rem;
+  max-width: 1200px;
+  width: 100%;
+} */
 
 /* ================================
    ✍️ TYPOGRAPHY
@@ -135,7 +151,7 @@ input {
     font-family: inherit;
     font-weight: inherit;
     color: inherit;
-    font-size: var(--font-size-body);
+    font-size: inherit;
 }
 
 /* ================================
@@ -165,6 +181,7 @@ header {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    /* max-width: 1200px; */
 }
 
 nav {
@@ -255,12 +272,12 @@ nav button {
         background-color: var(--neutral-700);
     }
     input {
-        margin-left: auto;
         visibility: hidden;
+        margin-left: auto;
     }
     .icon {
         visibility: hidden;
-        max-width: 100%;
+
         width: 1em;
     }
 }
@@ -279,12 +296,16 @@ form {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    margin: 0 auto;
+    font-size: 1.25rem;
 }
 
 form button {
-    font-size: var(--font-size-body);
+    /* font-size: var(--font-size-body); */
     background-color: var(--blue-500);
-    padding: 1rem;
+    padding: 0.75em 1.25em;
+    font-size: inherit;
+
 }
 
 #place {
@@ -292,8 +313,8 @@ form button {
     background-color: transparent;
     width: 100%;
     height: 100%;
-    padding: 1rem;
-    padding-left: 3rem;
+    padding: 0.75em 1.25em;
+    padding-left: 3em;
     cursor: pointer;
 }
 
@@ -302,11 +323,13 @@ form button {
     position: relative;
     background-color: var(--neutral-800);
     cursor: pointer;
+    
 }
 .search-bar > img {
     position: absolute;
-    left: 1em;
+    left: 1.25em;
     top: 1em;
+    width: 1em;
 }
 
 .today,
@@ -320,6 +343,7 @@ form button {
 main {
     display: grid;
     gap: 2rem;
+    /* max-width: 1200px; */
 }
 
 #widget {
@@ -485,15 +509,18 @@ main {
 }
 
 @media (min-width: 576px) {
-   body {
+    body {
         padding: 1.5rem 3rem;
     }
-     #search-area {
+    /*   #search-area {
         max-width: 500px;
         margin: 0 auto;
-    }
-     form {
+    } */
+    form {
         flex-direction: row;
+        gap: 1rem;
+    /* max-width: 55%; */
+
     }
     /* #widget {
           max-width: 400px;
@@ -512,10 +539,8 @@ main {
     display: flex;
   } */
 
-
-
     main {
-        /*  grid-template-columns: 1fr 2fr; */
+        grid-template-columns: 1fr 1fr;
         /* grid-template-rows: repeat(3, 1fr); */
     }
     /*  }
@@ -529,14 +554,13 @@ main {
         grid-column: 1 / span 2;
     }
 
-      .hourly {
+    .hourly {
         grid-column: 2;
         grid-row: 1;
         max-height: 515px;
     }
 
     #widget {
-
         /*  flex-direction: row; */
         /* background: no-repeat url(/assets/images/bg-today-large.svg); */
     }
@@ -556,14 +580,15 @@ main {
         padding: 2rem 5rem;
     }
     #search-area {
-        max-width: 500px;
-        margin: 0 auto;
+        /*    max-width: 500px;
+        margin: 0 auto; */
     }
     form {
         flex-direction: row;
     }
     main {
-        /* grid-template-columns: repeat(3, 1fr); */
+        /* margin: 0 auto; */
+        grid-template-columns: 2fr 1fr;
         /* grid-template-rows: repeat(3, 1fr); */
         max-height: 600px;
     }
