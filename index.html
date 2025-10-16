@@ -22,93 +22,102 @@
                 <img src="/assets/images/logo.svg" alt="logo" class="logo" />
 
                 <div class="menu-wrapper">
-                  <button type="button" id="unitBtn">
-                      <img src="/assets/images/icon-units.svg" alt="" /> Units
-                      <img src="/assets/images/icon-dropdown.svg" alt="" />
-                  </button>
-                  <div class="unit-menu" id="unitMenu">
-                    <!-- Add inside your unit menu or wherever appropriate -->
-                      <button id="imperialSwitch" type="button">Switch to Imperial</button>
-                      <fieldset class="unit-group">
-                          <legend>Temperature</legend>
-                          <label class="unit-option">
-                            Celsius (°C)
-                              <input
-                                  type="radio"
-                                  name="temperature"
-                                  value="celsius"
-                                  checked
-                              />
-                          </label>
-                          <label class="unit-option">
-                            Fahrenheit (°F)
-                              <input
-                                  type="radio"
-                                  name="temperature"
-                                  value="fahrenheit"
-                              />
-                          </label>
-                      </fieldset>
-                      <hr>
-                      <fieldset class="unit-group">
-                          <legend>Wind Speed</legend>
-                          <label class="unit-option">
-                            km/h
-                              <input type="radio" name="wind" value="kmh" checked />
-                          </label>
-                          <label class="unit-option">
-                            mph
-                              <input type="radio" name="wind" value="mph" />
-                          </label>
-                      </fieldset>
-                      <hr>
-                      <fieldset class="unit-group">
-                          <legend>Precipitation</legend>
-                          <label class="unit-option">
-                            Millimeters (mm)
-                              <input
-                                  type="radio"
-                                  name="precipitation"
-                                  value="mm"
-                                  checked
-                              />
-                          </label>
-                          <label class="unit-option">
-                            Inches (in)
-                              <input type="radio" name="precipitation" value="inch" />
-                          </label>
-                      </fieldset>
-                  </div>
+                    <button type="button" id="unitBtn">
+                        <img src="/assets/images/icon-units.svg" alt="" /> Units
+                        <img src="/assets/images/icon-dropdown.svg" alt="" />
+                    </button>
+                    <div class="unit-menu" id="unitMenu">
+                        <!-- Add inside your unit menu or wherever appropriate -->
+                        <button id="imperialSwitch" type="button">
+                            Switch to Imperial
+                        </button>
+                        <fieldset class="unit-group">
+                            <legend>Temperature</legend>
+                            <label class="unit-option">
+                                Celsius (°C)
+                                <input
+                                    type="radio"
+                                    name="temperature"
+                                    value="celsius"
+                                    checked
+                                />
+                            </label>
+                            <label class="unit-option">
+                                Fahrenheit (°F)
+                                <input
+                                    type="radio"
+                                    name="temperature"
+                                    value="fahrenheit"
+                                />
+                            </label>
+                        </fieldset>
+                        <hr />
+                        <fieldset class="unit-group">
+                            <legend>Wind Speed</legend>
+                            <label class="unit-option">
+                                km/h
+                                <input
+                                    type="radio"
+                                    name="wind"
+                                    value="kmh"
+                                    checked
+                                />
+                            </label>
+                            <label class="unit-option">
+                                mph
+                                <input type="radio" name="wind" value="mph" />
+                            </label>
+                        </fieldset>
+                        <hr />
+                        <fieldset class="unit-group">
+                            <legend>Precipitation</legend>
+                            <label class="unit-option">
+                                Millimeters (mm)
+                                <input
+                                    type="radio"
+                                    name="precipitation"
+                                    value="mm"
+                                    checked
+                                />
+                            </label>
+                            <label class="unit-option">
+                                Inches (in)
+                                <input
+                                    type="radio"
+                                    name="precipitation"
+                                    value="inch"
+                                />
+                            </label>
+                        </fieldset>
+                    </div>
                 </div>
             </nav>
 
             <h1>How's the sky looking today?</h1>
 
-
-                <div id="search-area">
-                    <form action="">
-                        <div class="search-bar">
-                            <img src="/assets/images/icon-search.svg" alt="" />
-                            <input
-                                type="search"
-                                name="q"
-                                id="place"
-                                minlength="2"
-                                placeholder="Search for a city, e.g., New York"
-                            />
-                        </div>
-                        <button id="searchBtn">Search</button>
-                    </form>
-                    <ul id="search-results" class="search-results"></ul>
-                </div>
-
+            <div id="search-area">
+                <form action="">
+                    <div class="search-bar">
+                        <img src="/assets/images/icon-search.svg" alt="" />
+                        <input
+                            type="search"
+                            name="q"
+                            id="place"
+                            minlength="2"
+                            placeholder="Search for a city, e.g., New York"
+                        />
+                    </div>
+                    <button id="searchBtn">Search</button>
+                </form>
+                <ul id="search-results" class="search-results"></ul>
+            </div>
         </header>
         <main>
             <section class="today">
                 <section id="widget">
                     <div>
-                      <h2>Berlin, Germany</h2>
-                      <p id="currentDate">Tuesday, Aug 5, 2025</p>
+                        <h2>Berlin, Germany</h2>
+                        <p id="currentDate">Tuesday, Aug 5, 2025</p>
                     </div>
                     <div class="row" id="degrees"></div>
                 </section>
@@ -122,9 +131,11 @@
             </section>
             <section class="hourly">
                 <div class="row">
-                  <h3>Hourly forecast</h3>
+                    <h3>Hourly forecast</h3>
 
-                  <div class="select wrapper"><select name="weekdays" id="weekdays"></select></div>
+                    <div class="select wrapper">
+                        <select name="weekdays" id="weekdays"></select>
+                    </div>
                 </div>
                 <div id="hourly-container"></div>
                 <!-- Insert hourly forecast for the selected day here -->

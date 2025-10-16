@@ -10,11 +10,29 @@
 const currentDate = document.getElementById('currentDate')
 
 async function fetchWeather(lat, lon, units = {}) {
-    const { temperature, wind, precipitation } = units
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,relative_humidity_2m&temperature_unit=${temperature}&wind_speed_unit=${wind}&precipitation_unit=${precipitation}&timezone=auto
-`
+    const {
+        temperature = 'celsius',
+        wind = 'kmh',
+        precipitation = 'mm',
+    } = units
 
-    const res = await fetch(url)
+    const url = new URL('https://api.open-meteo.com/v1/forecast')
+    url.search = new URLSearchParams({
+        latitude: String(lat),
+        longitude: String(lon),
+        daily: 'weather_code,temperature_2m_max,temperature_2m_min',
+        hourly: 'temperature_2m,weather_code',
+        current:
+            'temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,relative_humidity_2m',
+        temperature_unit: temperature,
+        wind_speed_unit: wind,
+        precipitation_unit: precipitation,
+        timezone: 'auto',
+    })
+    console.log(lat)
+    console.log(lon)
+
+    const res = await fetch(url.toString())
     const data = await res.json()
 
     return {
@@ -148,6 +166,7 @@ function displayDegrees(data) {
 }
 
 function renderCurrent(current, units) {
+
     const container = document.getElementById('degrees')
     container.innerHTML = ''
     currentDate.textContent = formatLocalizedDate(current.time)
@@ -287,6 +306,9 @@ const units = {
     precipitation: 'mm',
 }
 
+// add a global to remember current location (used for refetching when units change)
+let currentCoords = { lat: 59.33, lon: 18.06 }
+
 const unitInputs = document.querySelectorAll('.unit-option input[type="radio"]')
 
 unitInputs.forEach((input) => {
@@ -296,10 +318,10 @@ unitInputs.forEach((input) => {
 
         units[type] = value
 
-        // Hämta nytt väder med valda enheter
+        // Hämta nytt väder med valda enheter (use currentCoords)
         const { current, hourly, daily, current_units } = await fetchWeather(
-            59.33,
-            18.06,
+            currentCoords.lat,
+            currentCoords.lon,
             units
         )
         renderCurrent(current, current_units)
@@ -309,7 +331,8 @@ unitInputs.forEach((input) => {
 })
 
 // Sedan kan du rendera:
-fetchWeather(59.33, 18.06, units).then(
+// initial fetch — use currentCoords
+fetchWeather(currentCoords.lat, currentCoords.lon, units).then(
     ({ current, current_units, hourly, daily }) => {
         renderCurrent(current, current_units)
         renderHourly(hourly)
@@ -340,7 +363,7 @@ document.querySelector('form').addEventListener('submit', async function (e) {
     try {
         const res = await fetch(url)
         const data = await res.json()
-        console.log('something happened')
+
 
         searchResults.innerHTML = ''
         if (data.results && data.results.length > 0) {
@@ -350,8 +373,14 @@ document.querySelector('form').addEventListener('submit', async function (e) {
                 option.className = 'search-result-item'
                 option.textContent = `${place.name}, ${place.country}`
                 option.addEventListener('click', async (event) => {
-                    console.log('Result clicked')
+                    // console.log('Result clicked')
                     event.stopPropagation()
+                    // remember selected coords
+                    currentCoords = {
+                        lat: place.latitude,
+                        lon: place.longitude,
+                    }
+
                     // Fetch and render weather for selected location
                     const { current, hourly, daily, current_units } =
                         await fetchWeather(
@@ -388,9 +417,57 @@ const searchArea = document.getElementById('search-area')
 
 // Optional: Hide results when clicking outside
 document.addEventListener('click', (e) => {
-    console.log('Document clicked', e.target)
+    // console.log('Document clicked', e.target)
     if (!searchArea.contains(e.target)) {
         searchResults.innerHTML = ''
         searchResults.classList.remove('show')
     }
 })
+
+// add toggle button logic for switching metric <-> imperial
+const imperialBtn = document.getElementById('imperialSwitch')
+if (imperialBtn) {
+    imperialBtn.addEventListener('click', async () => {
+        const isMetric = units.temperature === 'celsius'
+
+        // programmatically set the radio inputs
+        const setInput = (name, value) => {
+            const el = document.querySelector(
+                `input[name="${name}"][value="${value}"]`
+            )
+            if (el) el.checked = true
+        }
+
+        if (isMetric) {
+            // switch to imperial
+            setInput('temperature', 'fahrenheit')
+            setInput('wind', 'mph')
+            setInput('precipitation', 'inch')
+
+            units.temperature = 'fahrenheit'
+            units.wind = 'mph'
+            units.precipitation = 'inch'
+            imperialBtn.textContent = 'Switch to Metric'
+        } else {
+            // switch to metric
+            setInput('temperature', 'celsius')
+            setInput('wind', 'kmh')
+            setInput('precipitation', 'mm')
+
+            units.temperature = 'celsius'
+            units.wind = 'kmh'
+            units.precipitation = 'mm'
+            imperialBtn.textContent = 'Switch to Imperial'
+        }
+
+        // refetch with current coordinates and updated units
+        const { current, hourly, daily, current_units } = await fetchWeather(
+            currentCoords.lat,
+            currentCoords.lon,
+            units
+        )
+        renderCurrent(current, current_units)
+        renderHourly(hourly)
+        renderDaily(daily)
+    })
+}

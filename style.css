@@ -495,10 +495,10 @@ main {
      form {
         flex-direction: row;
     }
-    #widget {
+    /* #widget {
           max-width: 400px;
           margin: 0 auto;
-    }
+    } */
 }
 
 /* --- Tablet (iPad: 768px–1024px) --- */
